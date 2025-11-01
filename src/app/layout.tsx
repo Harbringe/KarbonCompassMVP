@@ -11,12 +11,12 @@ import { Metadata } from "next";
 const queryClient = new QueryClient();
 export const metadata: Metadata = {
   title: {
-    default: "Karbon Compass",
-    template: `%s - ${"Karbon Compass"}`,
+    default: "KarbonLedger",
+    template: `%s - ${"KarbonLedger"}`,
   },
   description: "siteConfig.description",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/FINAL_LOGO.webp",
   },
 };
 export default function RootLayout({
