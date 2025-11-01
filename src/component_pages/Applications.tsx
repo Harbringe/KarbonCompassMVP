@@ -1,8 +1,6 @@
 "use client";
-import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -23,7 +21,6 @@ import {
 } from "lucide-react";
 
 const Applications = () => {
-  const [activeTab, setActiveTab] = useState("project-dev");
 
   const interfaces = [
     {
@@ -140,86 +137,44 @@ const Applications = () => {
               </p>
             </div>
 
-            <Tabs
-              defaultValue="project-dev"
-              value={activeTab}
-              onValueChange={setActiveTab}
-              className="space-y-8"
-            >
-              <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 bg-transparent">
-                {interfaces.map((interface_) => (
-                  <TabsTrigger
-                    key={interface_.id}
-                    value={interface_.id}
-                    className="flex items-center gap-2 data-[state=active]:bg-karbon-100 data-[state=active]:text-karbon-600 dark:data-[state=active]:bg-karbon-900 dark:data-[state=active]:text-karbon-400"
-                  >
-                    {interface_.icon}
-                    <span className="hidden md:inline">{interface_.title}</span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {interfaces.map((interface_) => (
-                <TabsContent
+                <Card
                   key={interface_.id}
-                  value={interface_.id}
-                  className="pt-4"
+                  className="hover:shadow-lg transition-shadow duration-300 border-2 hover:border-karbon-400 dark:hover:border-karbon-600"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                    <div className="lg:col-span-2">
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <div className="flex items-center gap-3 mb-2">
-                            {interface_.icon}
-                            <CardTitle>{interface_.title}</CardTitle>
-                          </div>
-                          <CardDescription>
-                            {interface_.description}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <h3 className="font-medium mb-3">Key Features:</h3>
-                          <ul className="space-y-2">
-                            {interface_.features.map((feature, index) => (
-                              <li
-                                key={index}
-                                className="flex items-start gap-2"
-                              >
-                                <div className="rounded-full bg-karbon-100 p-1 dark:bg-karbon-800 mt-0.5">
-                                  <UserCheck className="h-3 w-3 text-karbon-600" />
-                                </div>
-                                <span className="text-sm">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <Button className="w-full mt-6 bg-karbon-600 hover:bg-karbon-700 text-white">
-                            Explore Interface
-                            <ArrowRight className="h-4 w-4 ml-2" />
-                          </Button>
-                        </CardContent>
-                      </Card>
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 rounded-lg bg-karbon-100 dark:bg-karbon-900">
+                        {interface_.icon}
+                      </div>
+                      <CardTitle className="text-xl">{interface_.title}</CardTitle>
                     </div>
-                    <div className="lg:col-span-3">
-                      <Card className="overflow-hidden h-full border border-karbon-100 dark:border-karbon-800">
-                        <div className="bg-gray-50 dark:bg-gray-900 h-full flex items-center justify-center">
-                          <div className="text-center p-8">
-                            <h3 className="text-xl font-medium mb-4">
-                              Interface Preview
-                            </h3>
-                            <p className="text-muted-foreground mb-6">
-                              Interactive demo coming soon
-                            </p>
-                            <Button variant="outline">
-                              Request Demo Access
-                            </Button>
+                    <CardDescription className="text-sm">
+                      {interface_.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="font-semibold mb-3 text-sm text-karbon-600 dark:text-karbon-400">
+                      Interface Pointers:
+                    </h3>
+                    <ul className="space-y-2">
+                      {interface_.features.map((feature, index) => (
+                        <li
+                          key={index}
+                          className="flex items-start gap-2"
+                        >
+                          <div className="rounded-full bg-karbon-100 p-1 dark:bg-karbon-800 mt-0.5 flex-shrink-0">
+                            <UserCheck className="h-3 w-3 text-karbon-600" />
                           </div>
-                        </div>
-                      </Card>
-                    </div>
-                  </div>
-                </TabsContent>
+                          <span className="text-sm text-foreground/80">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
               ))}
-            </Tabs>
+            </div>
 
             <div className="mt-20 text-center">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">
@@ -229,8 +184,11 @@ const Applications = () => {
                 Explore our platform and discover how KarbonLedger can transform
                 your carbon management efforts.
               </p>
-              <Button className="bg-ocean-600 hover:bg-ocean-700 text-white">
-                Get Started Today
+              <Button
+                className="bg-karbon-600 hover:bg-karbon-700 text-white"
+                onClick={() => window.open('https://linktr.ee/konmateamsofficehour', '_blank', 'noopener,noreferrer')}
+              >
+                Get in Touch
               </Button>
             </div>
           </div>

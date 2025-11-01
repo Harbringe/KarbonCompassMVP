@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -19,10 +19,27 @@ import {
   Link,
   Lock,
   Coins,
+  ChevronLeft,
+  ChevronRight,
+  LayoutDashboard,
 } from "lucide-react";
+import NextLink from "next/link";
 
 const ModulesFeatures = () => {
   const [selectedModule, setSelectedModule] = useState("tokenization");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  };
 
   const modules = [
     {
@@ -254,7 +271,7 @@ const ModulesFeatures = () => {
   return (
     <div
       id="modules"
-      className="py-20 bg-gradient-to-b from-background to-karbon-50/50 dark:to-karbon-950/50"
+      className="py-20 bg-gradient-to-b from-background to-karbon-50/50 dark:to-karbon-950/50 scroll-mt-20"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
@@ -273,19 +290,43 @@ const ModulesFeatures = () => {
           onValueChange={setSelectedModule}
           className="w-full"
         >
-          <div className="overflow-x-auto pb-4">
-            <TabsList className="inline-flex w-auto h-auto p-1 mb-8">
-              {modules.map((module) => (
-                <TabsTrigger
-                  key={module.id}
-                  value={module.id}
-                  className="px-4 py-2 flex items-center gap-2 whitespace-nowrap"
-                >
-                  {module.icon}
-                  <span>{module.title}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          <div className="relative flex items-center mb-8">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={scrollLeft}
+              className="absolute left-0 z-10 bg-background/80 backdrop-blur-sm hover:bg-background shadow-md"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+
+            <div
+              ref={scrollContainerRef}
+              className="overflow-x-auto scrollbar-hide mx-12"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <TabsList className="inline-flex w-auto h-auto p-1">
+                {modules.map((module) => (
+                  <TabsTrigger
+                    key={module.id}
+                    value={module.id}
+                    className="px-4 py-2 flex items-center gap-2 whitespace-nowrap"
+                  >
+                    {module.icon}
+                    <span>{module.title}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={scrollRight}
+              className="absolute right-0 z-10 bg-background/80 backdrop-blur-sm hover:bg-background shadow-md"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
           </div>
 
           {modules.map((module) => (
@@ -339,9 +380,12 @@ const ModulesFeatures = () => {
         </Tabs>
 
         <div className="flex justify-center mt-12">
-          <Button className="bg-karbon-600 hover:bg-karbon-700 text-white">
-            Explore KarbonLedger Protocol
-          </Button>
+          <NextLink href="/dashboard">
+            <Button className="bg-karbon-600 hover:bg-karbon-700 text-white">
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Experience Our Dashboard
+            </Button>
+          </NextLink>
         </div>
       </div>
     </div>
